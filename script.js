@@ -7,7 +7,7 @@ function showTime() {
 setInterval(showTime, 1000);
 
 // Binance API'den BTC/USDT fiyatını çekme
-const apiKey = 'S9wZMDya8UDMg6WztpwCIycR0uR1r0ZCkDNql283qqVyrerBXcV8jgVCoy3yighY';  // Binance API anahtarını buraya yaz
+const apiKey = 's9wZMDya8UDMg6WztpwCIycR0uR1r0ZCkDNql283qqVyrerBXcV8jgVCoy3yighY';  // Binance API anahtarını buraya yaz
 
 fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT', {
   method: 'GET',
