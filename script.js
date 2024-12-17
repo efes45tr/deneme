@@ -24,14 +24,16 @@ fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT', {
   .catch(error => {
     console.error("Veri çekme hatası:", error);  // Eğer bir hata olursa, konsola yazdırıyoruz
   });
-// Binance Futures API'den perp paritelerinin fiyatlarını çekme
-fetch('https://fapi.binance.com/fapi/v1/ticker/price')
+
+// Binance Futures API'den perp paritelerinin fiyatlarını çekme (CORS proxy ile)
+fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://fapi.binance.com/fapi/v1/ticker/price'))
   .then(response => response.json())  // Veriyi JSON formatında alıyoruz
   .then(data => {
     let output = '';
     
     // Sadece perp (future) paritelerini filtreliyoruz
-    data.forEach(pair => {
+    const pairs = JSON.parse(data.contents); // CORS proxy'den gelen veri
+    pairs.forEach(pair => {
       if (pair.symbol.includes('USDT')) {  // Perp pariteleri genellikle USDT ile sonlanır
         output += `<p>${pair.symbol}: ${pair.price} USDT</p>`;
       }
