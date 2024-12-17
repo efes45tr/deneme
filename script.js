@@ -44,3 +44,33 @@ fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://fapi.b
   .catch(error => {
     console.error("Veri çekme hatası:", error);
   });
+// Binance Futures API'den perp paritelerinin fiyatlarını çekme (CORS proxy ile)
+fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://fapi.binance.com/fapi/v1/ticker/price'))
+  .then(response => response.json())  // Veriyi JSON formatında alıyoruz
+  .then(data => {
+    console.log(data);  // CORS proxy'den gelen yanıtı kontrol edelim
+
+    let output = '';
+    
+    // data.contents, JSON string formatında olacak. Yani önce JSON.parse kullanmalıyız.
+    const pairs = JSON.parse(data.contents);  // CORS proxy'den gelen veri
+    
+    // gelen verinin doğru formatta olduğunu kontrol et
+    console.log(pairs);  // Pairs veri yapısını kontrol et
+
+    // Eğer doğru bir dizi (array) ise işlem yap
+    if (Array.isArray(pairs)) {
+      pairs.forEach(pair => {
+        if (pair.symbol.includes('USDT')) {  // Perp pariteleri genellikle USDT ile sonlanır
+          output += `<p>${pair.symbol}: ${pair.price} USDT</p>`;
+        }
+      });
+    }
+    
+    // Fiyatları sayfada göstermek
+    document.getElementById("priceList").innerHTML = output;
+  })
+  .catch(error => {
+    console.error("Veri çekme hatası:", error);  // Eğer bir hata olursa, konsola yazdırıyoruz
+  });
+
