@@ -5,7 +5,6 @@ function showTime() {
     clock.innerHTML = now.toLocaleTimeString();
 }
 setInterval(showTime, 1000);
-// Eğer zaten bir kod varsa, yukarıdaki kısmı bırak ve şu yeni kodu ekle:
 
 // Binance API'den BTC/USDT fiyatını çekme
 const apiKey = 'S9wZMDya8UDMg6WztpwCIycR0uR1r0ZCkDNql283qqVyrerBXcV8jgVCoy3yighY';  // Binance API anahtarını buraya yaz
@@ -31,7 +30,7 @@ fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://fapi.b
   .then(data => {
     let output = '';
     
-    // Sadece perp (future) paritelerini filtreliyoruz
+    // CORS proxy'den gelen veri
     const pairs = JSON.parse(data.contents); // CORS proxy'den gelen veri
     pairs.forEach(pair => {
       if (pair.symbol.includes('USDT')) {  // Perp pariteleri genellikle USDT ile sonlanır
